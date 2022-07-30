@@ -4,14 +4,12 @@ require_once __DIR__ . '/GetConnection.php';
 
 $connection = getConnection();
 
-$username = $connection->quote("admin '; #");
-$password = $connection->quote("salah ga peduli");
-$sql = "SELECT * FROM tb_user WHERE username = $username AND password = $password;";
+$username = "admin";
+$password = "12345";
 
-
-echo  $sql .PHP_EOL;
-
-$statement = $connection->query($sql);
+$sql = "SELECT * FROM tb_user WHERE username = ? AND password = ?";
+$statement = $connection->prepare($sql);
+$statement->execute([$username, $password]);
 
 $success = false;
 $find_user = null;
@@ -28,3 +26,5 @@ if ($success) {
 }
 
 $connection = null;
+
+
